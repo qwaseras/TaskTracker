@@ -21,7 +21,7 @@
 //= require_tree .
 //= require select2
 
- $(document).ready(function() {
+$(document).on('turbolinks:load', function() {
    $( ".select2" ).select2({
    });
   });
