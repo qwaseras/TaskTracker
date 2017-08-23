@@ -58,3 +58,4 @@ gem 'devise'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
 gem "react-rails"
+gem "select2-rails"

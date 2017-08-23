@@ -19,3 +19,9 @@
 //= require react_ujs
 //= require components
 //= require_tree .
+//= require select2
+
+$(document).on('turbolinks:load', function() {
+   $( ".select2" ).select2({
+   });
+  });
