@@ -20,7 +20,11 @@
   <%= form.label "Comment" %>
   <%= form.text_field :title, id: :task_description %>
   <%= form.hidden_field :task_id, value: @task.id%>
-
+  <%= form.submit "Send"%>
+<%end%>
+<%=form_for @task do |form|%>
+  <%= form.label "Change status" %>
+  <%= form.select :status, options_for_select(Task::Status), {},{class: 'select2', value: @task.status} %>
   <%= form.submit "Send"%>
 <%end%>
 <%= link_to 'Back', tasks_path %>
