@@ -12,7 +12,7 @@
        <ul class="nav justify-content-end">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <h6>Logged as <strong><%= current_user.first_name.capitalize %> <%= current_user.second_name.capitalize %></strong>( <%=current_user.role%> )</h6>
+            <h6>Logged as <strong><%= current_user.first_name %> <%= current_user.second_name%></strong>( <%=current_user.role%> )</h6>
           </li>
           <li class="nav-item">
             <%= link_to 'Edit profile', edit_user_registration_path, class: 'nav-link' %>
