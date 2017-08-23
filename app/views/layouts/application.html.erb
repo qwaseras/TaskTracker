@@ -9,40 +9,37 @@
   </head>
 
   <body>
-        <ul class="nav">
+       <ul class="nav justify-content-end">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <h6>Logged as <strong><%= current_user.email %></strong>( <%=current_user.role%> )</h6>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Edit profile', edit_user_registration_path, class: 'nav-link' %>
+          </li>
 
-          <% if user_signed_in? %>
-          <strong><%= current_user.email %></strong>
-          
-            <li class="nav-item">
-              <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-            </li>
-            <li class="nav-item">
-              <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-            </li>
-            <li class="nav-item">
-              <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-            </li>
-            <% end %>
+          <li class="nav-item">
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
 
-        </ul>
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, :class => 'nav-link'  %>
 
-    <p class="navbar-text pull-right">
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_path, :class => 'nav-link'  %>
+          </li>
+        <% end %>
+      </ul>
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
 
-    </p>
+                <%= yield %>
 
-
-
-    <%= yield %>
   </body>
 </html>
