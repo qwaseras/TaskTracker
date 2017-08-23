@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_developer]
 
   # GET /projects
   # GET /projects.json
@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1.json
   def update
     respond_to do |format|
-      if @project.update(project_params)
+      if @project.update(title: project_params[:title])
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -61,6 +61,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def add_developer
+    @project.users <<  User.where(id: params[:user_ids])
+    redirect_to @project,  notice: 'Developers was added.'
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -69,6 +75,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title)
+      params.require(:project).permit(:title, :user_id)
     end
 end
