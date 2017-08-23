@@ -20,12 +20,7 @@
     <%= form.label :description %>
     <%= form.text_field :description, id: :task_description %>
   </div>
-
-  <div class="field">
-    <%= form.label :project_id %>
-    <%= form.number_field :project_id, id: :task_project_id %>
-  </div>
-
+  <%= form.hidden_field :project_id, id: :task_project_id, value: params[:project_id]%>
   <div class="actions">
     <%= form.submit %>
   </div>

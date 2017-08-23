@@ -1,0 +1,14 @@
+var Projects = React.createClass({
+  render() {
+    return(
+    <div className="list-group">
+  			{this.props.projects.map(function(project, index){
+  					return(
+                      <a href = {"projects/" + project.id}  className="list-group-item list-group-item-action">{project.title}</a>
+  					 )
+  					}
+  				)}
+  		</div>
+    )
+  }
+})
