@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :description %>
-    <%= form.text_field :description, id: :task_description %>
+    <%= form.text_area :description, id: :task_description %>
   </div>
   <%= form.hidden_field :project_id, id: :task_project_id, value: params[:project_id]%>
   <div class="actions">
