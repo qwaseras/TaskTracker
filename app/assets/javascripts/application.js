@@ -24,7 +24,6 @@
 $(document).on('turbolinks:load', function() {
    $( ".select2" ).select2({
    });
-
    setTimeout(function() {
       $('.alert').slideUp();
     }, 3000);
