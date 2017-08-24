@@ -2,13 +2,16 @@ var Comments = React.createClass({
   render() {
     return(
       <div className="list-group">
+        <h3>Comments</h3>
   			{this.props.comments.map(function(comment, index){
   					return(
               <div  className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="d-flex w-100 justify-content-between">
-                  <small>{comment.created_at}</small>
+                <div className="d-flex w-100 justify-content-start">
+                  <small>from user &nbsp;</small><h6>{comment.commenter_full_name}</h6>
                 </div>
                 <p className="mb-1">{comment.title}</p>
+                <small>{comment.created_at}</small><br/>
+
               </div>
 					)
   					}
