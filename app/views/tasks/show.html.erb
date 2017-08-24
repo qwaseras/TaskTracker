@@ -27,6 +27,11 @@
   <%= form.select :status, options_for_select(Task::Status, @task.status), {},{class: 'select2'} %>
   <%= form.submit "Send"%>
 <%end%>
+<%=form_for @task do  |f|%>
+  <%= f.label :user_id, "Chose developers to add"%><br/>
+  <%= f.select :user_id, options_for_select(User.where.not(id: @task.user, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name, u.id]}),{}, class: 'select2' %>
+  <%= f.submit "Add dev to task"%>
+<%end%>
 <%= link_to 'Back', tasks_path %>
 
 <%= react_component "Comments", comments: @task.comments%>
