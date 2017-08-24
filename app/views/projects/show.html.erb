@@ -11,7 +11,7 @@
 <%=form_tag add_developer_path do  %>
   <%= hidden_field_tag :id, @project.id %>
   <%= label_tag :user_ids, "Chose developers to add"%><br/>
-  <%= select_tag :user_ids, options_from_collection_for_select(User.where.not(id: @project.user_ids), :id, :first_name, :second_name ), { :multiple => true, size: 5, class: 'select2'} %>
+  <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids).collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
   <%= submit_tag "Add dev to project"%>
 <%end%>
 <%= link_to 'New Task', new_task_path(project_id: @project.id) %>
