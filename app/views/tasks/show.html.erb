@@ -16,22 +16,30 @@
 </p>
 
 <%= link_to 'Edit', edit_task_path(@task) %>
+
 <%=form_for Comment.new do |form|%>
   <%= form.label "Comment" %>
   <%= form.text_field :title, id: :task_description %>
   <%= form.hidden_field :task_id, value: @task.id%>
   <%= form.submit "Send"%>
 <%end%>
+
 <%=form_for @task do |form|%>
   <%= form.label "Change status" %>
   <%= form.select :status, options_for_select(Task::Status, @task.status), {},{class: 'select2'} %>
   <%= form.submit "Send"%>
 <%end%>
-<%=form_for @task do  |f|%>
-  <%= f.label :user_id, "Chose developers to add"%><br/>
-  <%= f.select :user_id, options_for_select(User.where.not(id: @task.user, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name, u.id]}),{}, class: 'select2' %>
-  <%= f.submit "Add dev to task"%>
+
+<% if current_user.role == "manager"%>
+  <%=form_tag add_developer_task_path do  %>
+    <%= hidden_field_tag :id, @task.id %>
+    <%= label_tag :user_ids, "Chose developers to add"%><br/>
+    <%= select_tag :user_ids, options_for_select(User.where.not(id: @task.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name, u.id]}),{ :multiple => true, size: 5, class: 'select2'} %>
+    <%= submit_tag "Add dev to task"%>
+  <%end%>
 <%end%>
+
+
 <%= link_to 'Back', tasks_path %>
 
 <%= react_component "Comments", comments: @task.comments%>

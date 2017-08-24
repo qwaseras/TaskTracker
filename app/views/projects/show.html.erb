@@ -8,11 +8,13 @@
 <%= react_component "Tasks", tasks: @project.tasks%>
 
 <%= link_to 'Edit', edit_project_path(@project) %>
-<%=form_tag add_developer_project_path do  %>
-  <%= hidden_field_tag :id, @project.id %>
-  <%= label_tag :user_ids, "Chose developers to add"%><br/>
-  <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
-  <%= submit_tag "Add dev to project"%>
+<% if current_user.role == "manager"%>
+  <%=form_tag add_developer_project_path do  %>
+    <%= hidden_field_tag :id, @project.id %>
+    <%= label_tag :user_ids, "Chose developers to add"%><br/>
+    <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
+    <%= submit_tag "Add dev to project"%>
+  <%end%>
 <%end%>
 <%= link_to 'New Task', new_task_path(project_id: @project.id) %>
 <%= link_to 'Back', projects_path %>
