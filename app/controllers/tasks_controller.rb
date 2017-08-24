@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :add_developer]
 
   # GET /tasks
   # GET /tasks.json
@@ -61,6 +61,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def add_developer
+    @task.users <<  User.where(id: params[:user_ids])
+    redirect_to @task,  notice: 'Developers was added.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -69,6 +74,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :description, :project_id, :status)
+      params.require(:task).permit(:title, :description, :project_id, :status, :user)
     end
 end
