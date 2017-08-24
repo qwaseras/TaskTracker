@@ -23,6 +23,11 @@
 
 $(document).on('turbolinks:load', function() {
    $( ".select2" ).select2({
+     "language": {
+       "noResults": function(){
+           return "No developers available for this action";
+       }
+   },
    });
    setTimeout(function() {
       $('.alert').slideUp();

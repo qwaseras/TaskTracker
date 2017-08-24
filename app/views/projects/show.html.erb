@@ -1,20 +1,32 @@
-<p id="notice"><%= notice %></p>
+<div class = "col-md-9 mx-auto">
+  <p id="notice"><%= notice %></p>
+    <h2>Project <%= @project.title %></h2>
+    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %><br/>
 
-<p>
-  <strong>title:</strong>
-  <%= @project.title %>
-</p>
 
-<%= react_component "Tasks", tasks: @project.tasks%>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 border">
+        <h4>Tasks</h4>
+        <%= react_component "Tasks", tasks: @project.tasks%>
+        <%= link_to 'New Task', new_task_path(project_id: @project.id), class: "btn btn-success"  %><br/>
 
-<%= link_to 'Edit', edit_project_path(@project) %>
-<% if current_user.role == "manager"%>
-  <%=form_tag add_developer_project_path do  %>
-    <%= hidden_field_tag :id, @project.id %>
-    <%= label_tag :user_ids, "Chose developers to add"%><br/>
-    <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
-    <%= submit_tag "Add dev to project"%>
-  <%end%>
-<%end%>
-<%= link_to 'New Task', new_task_path(project_id: @project.id) %>
-<%= link_to 'Back', projects_path %>
+      </div>
+      <div class="col-6">
+        <% if current_user.role == "manager"%>
+          <%=form_tag add_developer_project_path do  %>
+            <%= hidden_field_tag :id, @project.id %>
+            <%= label_tag :user_ids, "Chose developers to add"%><br/>
+            <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
+            <%= submit_tag "Add dev to project"%><br/>
+
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+  </div><br/>
+  <%= link_to 'Back to project list', projects_path, class: "btn btn-info"  %>
+
+
+
+</div>

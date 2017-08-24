@@ -41,7 +41,7 @@ var Comments = React.createClass({
           url: `/comments/${comment.id}}`,
           type: 'PUT',
            data: { comment: comment },
-           success: () => { 
+           success: () => {
                             this.updateComment(comment);
                            }
           } )
@@ -66,9 +66,16 @@ var Comments = React.createClass({
   render() {
     return(
     <div>
-      <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
-      <div className="list-group">
-        <h3>Comments</h3>
+      <div className="list-group container">
+        <div className="row">
+            <div className="col">
+              <h3>Comments</h3>
+            </div>
+            <div className="col">
+              <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
+            </div>
+        </div>
+
   			{this.state.comments.map((comment) =>{
   					return(
               <Comment comment = {comment} key = {comment.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
