@@ -42,4 +42,4 @@
 
 <%= link_to 'Back', tasks_path %>
 
-<%= react_component "Comments", comments: comments_react(@task)%>
+<%= react_component "Comments", comments: comments_react(@task), task_id: @task.id%>

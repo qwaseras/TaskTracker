@@ -1,15 +1,49 @@
 var Comments = React.createClass({
+
+  getInitialState: function(){
+		return{
+			comments: this.props.comments,
+      title: ''
+		}
+  },
+  handleUserInput: function(obj){
+  		this.setState(obj)
+  },
+
+
+  handleSubmit: function(){
+  		var comment = {
+  			title: this.state.title,
+        task_id: this.props.task_id
+  			};
+  		 $.ajax({
+      		 	url: '/comments',
+      		 	 type: 'POST',
+      		 	 data: { comment },
+      		 	 success: (response) => { console.log('comment added', response); }
+      		 	}).done(function(data){
+      		 		this.addNewComment(data);
+      		 	}.bind(this));
+      	},
+      	addNewComment: function(comment){
+      		var comments = React.addons.update(this.state.comments,{$push: [comment]});
+      		this.setState({comments: comments});
+    },
+
   render() {
     return(
+    <div>
+      <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
       <div className="list-group">
         <h3>Comments</h3>
-  			{this.props.comments.map(function(comment, index){
+  			{this.state.comments.map(function(comment, index){
   					return(
-              <Comment comment = {comment}/>
+              <Comment comment = {comment} key = {comment.id}/>
 					        )
   					}
   				)}
 			</div>
+    </div>
     )
   }
 })
