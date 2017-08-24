@@ -24,7 +24,7 @@
 <%end%>
 <%=form_for @task do |form|%>
   <%= form.label "Change status" %>
-  <%= form.select :status, options_for_select(Task::Status), {},{class: 'select2', selected: @task.status} %>
+  <%= form.select :status, options_for_select(Task::Status, @task.status), {},{class: 'select2'} %>
   <%= form.submit "Send"%>
 <%end%>
 <%= link_to 'Back', tasks_path %>
