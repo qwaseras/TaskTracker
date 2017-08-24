@@ -4,7 +4,11 @@ var Comment = React.createClass({
 		return{
 			comment: this.props.comment
 		}
-},
+  },
+
+  handleDelete: function(id) {
+      this.props.handleDelete(id);
+  },
 
   render() {
     return(
@@ -15,6 +19,7 @@ var Comment = React.createClass({
                 </div>
                 <p className="mb-1">{this.state.comment.title}</p>
                 <small>{this.state.comment.created_at}</small><br/>
+                 <button onClick={this.handleDelete.bind(this, this.state.comment.id)} >Delete</button>
               </div>
 		</div>
     )

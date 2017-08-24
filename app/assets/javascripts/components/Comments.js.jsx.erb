@@ -6,6 +6,7 @@ var Comments = React.createClass({
       title: ''
 		}
   },
+
   handleUserInput: function(obj){
   		this.setState(obj)
   },
@@ -20,15 +21,28 @@ var Comments = React.createClass({
       		 	url: '/comments',
       		 	 type: 'POST',
       		 	 data: { comment },
-      		 	 success: (response) => { console.log('comment added', response); }
-      		 	}).done(function(data){
-      		 		this.addNewComment(data);
-      		 	}.bind(this));
+      		 	 success: () => { console.log('comment added', comment.title); this.submit(comment) }
+      		 	})
       	},
-      	addNewComment: function(comment){
-      		var comments = React.addons.update(this.state.comments,{$push: [comment]});
-      		this.setState({comments: comments});
-    },
+        submit(item) {
+          var newState = this.state.comments.concat(comment);
+          this.setState({ comments: newState })
+         },
+
+    handleDelete: function(id) {
+       $.ajax(
+         {
+           url: `/comments/${id}`,
+           type: 'DELETE',
+           success:() => { this.removeItemClient(id); console.log(`comment with id ${id} deleted`)}
+         }
+       );
+      },
+
+    removeItemClient: function(id){
+       var comments = this.state.comments.filter((comment) => { return comment.id != id; });
+       this.setState({ comments: comments });
+     },
 
   render() {
     return(
@@ -36,9 +50,9 @@ var Comments = React.createClass({
       <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
       <div className="list-group">
         <h3>Comments</h3>
-  			{this.state.comments.map(function(comment, index){
+  			{this.state.comments.map((comment) =>{
   					return(
-              <Comment comment = {comment} key = {comment.id}/>
+              <Comment comment = {comment} key = {comment.id} handleDelete={this.handleDelete}/>
 					        )
   					}
   				)}

@@ -32,12 +32,16 @@
           </li>
         <% end %>
       </ul>
-      <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-      <% end %>
+      <div class="pull-right", style="float:right; min-width: 300px">
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+      </div>
+
 
                 <%= yield %>
 
