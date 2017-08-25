@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments =  Comment.all
   end
 
   # GET /comments/1
@@ -26,13 +26,9 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment.task, notice: 'Comment was successfully created.' }
-      else
-        format.html { redirect_to @comment.task, alert: "Comment was not created" }
-      end
-    end
+
+    @comment.save
+    respond_with @comment, alert: "Comment created"
   end
 
   # PATCH/PUT /comments/1

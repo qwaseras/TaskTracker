@@ -19,14 +19,16 @@
             <%= submit_tag "Add dev to task"%>
           <%end%>
         <%end%>
+        <%unless @task.users.empty? %>
         <div class="">
-          <h5>Task developers</h5>
-          <ul class="list-group">
-            <% @task.users.where(role: 'developer').each do |user|%>
-              <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= button_to "Remove", remove_developer_task_path( id: @task.id, user_id: user.id) , remote:true, class: "float-right"%></li>
+            <h5>Task developers</h5>
+            <ul class="list-group">
+              <% @task.users.where(role: 'developer').each do |user|%>
+                <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= button_to "Remove", remove_developer_task_path( id: @task.id, user_id: user.id) , remote:true, class: "float-right"  if current_user.role == 'manager'%></li>
+            </ul>
             <%end%>
-          </ul>
-        </div>
+          </div>
+        <%end%>
       </div>
     </div>
   </div><br/>

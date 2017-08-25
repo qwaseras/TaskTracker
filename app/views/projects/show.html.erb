@@ -23,7 +23,7 @@
           <h5>Project developers</h5>
           <ul class="list-group">
             <% @project.users.where(role: 'developer').each do |user|%>
-              <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= button_to "Remove", remove_developer_project_path( id: @project.id, user_id: user.id) , remote:true, class: "float-right"%></li>
+              <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= button_to "Remove", remove_developer_project_path( id: @project.id, user_id: user.id) , remote:true, class: "float-right"  if current_user.role == 'manager'%></li>
             <%end%>
           </ul>
         </div>

@@ -3,25 +3,17 @@ var Comments = React.createClass({
   getInitialState: function(){
 		return{
 			comments: this.props.comments,
-      title: ''
 		}
   },
 
-  handleUserInput: function(obj){
-  		this.setState(obj)
-  },
 
-
-  handleSubmit: function(){
-  		var comment = {
-  			title: this.state.title,
-        task_id: this.props.task_id
-  			};
+  handleSubmit: function(comment){
+    comment.task_id = this.props.task_id,
   		 $.ajax({
       		 	url: '/comments',
       		 	 type: 'POST',
       		 	 data: { comment },
-      		 	 success: () => { console.log('comment added', comment.title); this.addComment(comment) }
+      		 	 success: (response) => { console.log('comment added', comment.title, response.created_at); this.addComment(response) }
       		 	})
       	},
 
@@ -72,11 +64,11 @@ var Comments = React.createClass({
               <h3>Comments</h3>
             </div>
             <div className="col">
-              <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
+              <CommentForm onFormSubmit={this.handleSubmit}/>
             </div>
         </div>
 
-  			{this.state.comments.map((comment) =>{
+  			{this.state.comments.reverse().map((comment) =>{
   					return(
               <Comment comment = {comment} key = {comment.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
 					        )
