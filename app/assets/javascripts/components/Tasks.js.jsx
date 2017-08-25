@@ -59,6 +59,7 @@ var Tasks = React.createClass({
   render() {
     return(
       <div className ="list-group">
+      <TaskForm onFormSubmit={this.handleSubmit}/>
   			{this.state.tasks.map((task) => {
   					return(
                 <Task task = {task} key = {task.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
@@ -66,7 +67,6 @@ var Tasks = React.createClass({
   					}
   				)}
 
-            <TaskForm onFormSubmit={this.handleSubmit}/>
 
   				</div>
     )
