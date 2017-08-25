@@ -18,17 +18,50 @@ var Tasks = React.createClass({
             })
         },
 
-      addTask(task) {
-        var newState = this.state.tasks.concat(task);
-        this.setState({ comments: newState })
+   handleDelete: function(id) {
+      $.ajax(
+        {
+          url: `/tasks/${id}`,
+          type: 'DELETE',
+          success:() => { this.removeTask(id); console.log(`task with id ${id} deleted`)}
+        }
+      );
+     },
+
+   handleUpdate(task) {
+       $.ajax({
+         url: `/tasks/${task.id}}`,
+         type: 'PUT',
+          data: { task: task },
+          success: () => {
+                           this.updateTask(task);
+                          }
+         } )
        },
+
+
+   addTask(task) {
+     var newState = this.state.tasks.concat(task);
+     this.setState({ tasks: newState })
+    },
+
+   updateTask(task) {
+     var tasks = this.state.tasks.filter((i) => { return i.id != task.id });
+     tasks.push(task);
+     this.setState({tasks: tasks });
+   },
+
+   removeTask: function(id){
+      var tasks = this.state.tasks.filter((task) => { return task.id != id; });
+      this.setState({ tasks: tasks });
+    },
 
   render() {
     return(
       <div className ="list-group">
-  			{this.state.tasks.map(function(task, index){
+  			{this.state.tasks.map((task) => {
   					return(
-                <Task task = {task}/>
+                <Task task = {task} key = {task.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
   					)
   					}
   				)}
