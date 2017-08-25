@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_developer]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_developer, :remove_developer]
 
   # GET /projects
   # GET /projects.json
@@ -64,6 +64,11 @@ class ProjectsController < ApplicationController
   def add_developer
     @project.users <<  User.where(id: params[:user_ids])
     redirect_to @project,  notice: 'Developers was added.'
+  end
+
+  def remove_developer
+    @project.users.delete(User.where(id: params[:user_id]))
+    redirect_to @project,  notice: 'Developers was removed from project.'
   end
 
 
