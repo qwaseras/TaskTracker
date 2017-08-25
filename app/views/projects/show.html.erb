@@ -8,9 +8,7 @@
     <div class="row">
       <div class="col-md-6 border">
         <h4>Tasks</h4>
-        <%= react_component "Tasks", tasks: @project.tasks%>
-        <%= link_to 'New Task', new_task_path(project_id: @project.id), class: "btn btn-success"  %><br/>
-
+        <%= react_component "Tasks", tasks: @project.tasks, project_id: @project.id%>
       </div>
       <div class="col-6">
         <% if current_user.role == "manager"%>
