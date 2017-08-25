@@ -21,7 +21,6 @@
         <%= form.label :description %>
         <%= form.text_area :description, id: :task_description, class: "form-control"  %>
       </div>
-      <%= form.hidden_field :project_id, id: :task_project_id, value: params[:project_id]%>
       <div class="actions">
         <%= form.submit "Submit", class: "btn btn-primary btn-lg btn-block login-button" %>
       </div>

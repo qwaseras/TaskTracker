@@ -24,7 +24,7 @@ var CommentForm = React.createClass({
       <div >
           <form className="form-inline" id="new_comment" onSubmit={this.handleSubmit}>
             <input name="authenticity_token" value="x+FKyoLXBS9C3gC9e08ZYC9LFSK+ECkXkxITbX9E74EhoSDhbZsPFlsogKM6vkS3SfsBxAK/MN+2VdxFwhc2ag==" type="hidden" />
-            <input id="comment_description" name="title" type="text" onChange = {this.handleChange} placeholder="Type your comment" />
+            <input id="comment_title" name="title" type="text" onChange = {this.handleChange} placeholder="Type your comment" />
             <input name="commit" value="Send" data-disable-with="Send" type="submit" />
           </form>
       </div>
