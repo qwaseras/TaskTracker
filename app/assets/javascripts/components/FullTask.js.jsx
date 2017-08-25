@@ -7,22 +7,21 @@ var FullTask = React.createClass({
     }
   },
 
-  handleDelete: function(id) {
+  handleDelete() {
     $.ajax(
       {
-        url: `/tasks/${id}`,
+        url: `/tasks/${this.state.task.id}`,
         type: 'DELETE',
-        success:() => {console.log(`task with id ${id} deleted`)}
+        success:() => {console.log(`task with id ${this.state.task.id} deleted`)}
       }
     );
   },
 
   handleEdit() {
     if(this.state.editable) {
-       var task = {id: this.state.task.id, title: this.ref_title.value, description: this.ref_description.value};
-       console.log(task)
+       var task = {title: this.ref_title.value, description: this.ref_description.value};
        $.ajax({
-         url: `/tasks/${task.id}}`,
+         url: `/tasks/${this.state.task.id}}`,
          type: 'PUT',
          data: { task: task },
          } );
@@ -33,21 +32,33 @@ var FullTask = React.createClass({
 
   render() {
     var title = this.state.editable ?
-              <input type='text'
-                     ref={(c) => this.ref_title = c}
-                     defaultValue={this.props.task.title} /> :
-                    <h2>{this.props.task.title}</h2>;
+                    <input type='text'
+                           ref={(c) => this.ref_title = c}
+                           defaultValue={this.props.task.title} /> :
+                           <h2>{this.props.task.title}</h2> ;
    var description = this.state.editable ?
              <input type='text'
                     ref={(c) => this.ref_description = c}
-                    defaultValue={this.props.task.description} /> :
-                    <strong>{this.props.task.description}</strong>;
+                    defaultValue={this.props.task.description}
+             /> :
+                    <span>{this.props.task.description}</span>;
     return(
       <div className = "list-group">
-          <button onClick={this.handleDelete.bind(this, this.state.task.id)} >Delete</button>
-          <button onClick={this.handleEdit}> {this.state.editable ? 'Submit' : 'Edit' }  </button>
-          {title}
-          {description}
+        <div className = "box" style = {{minHeight: '200px'}}>
+           Task for project <em>{this.props.project_title}</em><br/>
+           {title}
+          <strong>Description: </strong><p>{description}</p>
+        </div>
+
+        <div className = "box">
+          <button onClick={this.handleEdit}  className =  "btn btn-primary">
+            {this.state.editable ? 'Submit' : 'Edit' }
+          </button>
+          <button onClick={this.handleDelete}
+                  className = "btn btn-danger" >
+            Delete
+          </button>
+        </div>
       </div>
     )
   }

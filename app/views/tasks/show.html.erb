@@ -1,13 +1,8 @@
 <div class = "col-md-9 mx-auto">
-<small>project  <%= @task.project.title %></small><br/>
-
-<%= link_to 'Edit', edit_task_path(@task), class: "btn btn-primary" %>
-<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-
   <div class="container">
     <div class="row">
       <div class="col-md-6 border">
-      <%= react_component "FullTask", task: @task %>
+      <%= react_component "FullTask", task: @task, project_title: @task.project.title %>
       </div>
       <div class="col-6">
         <%=form_for @task do |form|%>
