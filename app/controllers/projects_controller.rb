@@ -65,7 +65,8 @@ class ProjectsController < ApplicationController
     @project.users <<  User.where(id: params[:user_ids])
     redirect_to @project,  notice: 'Developers was added.'
   end
- def remove_developer
+
+  def remove_developer
     @project.users.delete(User.where(id: params[:user_id]))
     redirect_to @project,  notice: 'Developers was removed from project.'
   end

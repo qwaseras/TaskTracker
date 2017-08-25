@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :add_developer]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :add_developer, :remove_developer]
 
   # GET /tasks
   # GET /tasks.json
@@ -59,6 +59,11 @@ class TasksController < ApplicationController
   def add_developer
     @task.users <<  User.where(id: params[:user_ids])
     redirect_to @task,  notice: 'Developers was added.'
+  end
+
+  def remove_developer
+    @task.users.delete(User.where(id: params[:user_id]))
+    redirect_to @task,  notice: 'Developers was removed from task.'
   end
 
   private
