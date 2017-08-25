@@ -2,27 +2,31 @@ var TaskForm = React.createClass({
 
   getInitialState: function(){
 		return{
-			// user: this.props.current_user,
-      // task: this.props.task
+      create: false
 		}
   },
 
   handleSubmit: function(e){
-  		e.preventDefault();
-      var task = {title : this.task_title.value, description: this.task_description.value}
-  		this.props.onFormSubmit(task);
+
+      if(this.state.create) {
+        var task = {title : this.task_title.value, description: this.task_description.value}
+    		this.props.onFormSubmit(task);
+       }
+        this.setState({create: !this.state.create});
   },
 
   render() {
+  var task = this.state.create ?
+                        <div>
+                          <input ref={(c) => this.task_title = c} id="task_title" name="title" type="text" onChange = {this.handleChange} placeholder = "Type task title" /><br/>
+                          <textarea ref={(c) => this.task_description = c} id="task_title" name="title" type="textarea" onChange = {this.handleChange} placeholder = "Type task description" /><br/>
+                        </div>:
+                        null
+                         ;
     return(
-      <div >
-          <h5>New task</h5>
-          <form className="form-inline" id="new_task" onSubmit={this.handleSubmit} className = "form-horizontal">
-            <input name="authenticity_token" value="x+FKyoLXBS9C3gC9e08ZYC9LFSK+ECkXkxITbX9E74EhoSDhbZsPFlsogKM6vkS3SfsBxAK/MN+2VdxFwhc2ag==" type="hidden" />
-            <input ref={(c) => this.task_title = c} id="task_title" name="title" type="text" onChange = {this.handleChange} placeholder = "Type task title" /><br/>
-            <input ref={(c) => this.task_description = c} id="task_title" name="title" type="text" onChange = {this.handleChange} placeholder = "Type task description" /><br/>
-            <input name="commit" value="Send" data-disable-with="Send" type="submit" />
-          </form>
+      <div className = "123">
+        {task}
+        <button onClick={this.handleSubmit}  className =  "float-right btn btn-success">{this.state.create ? 'Create task' : 'New task' }</button>
       </div>
     )
   }
