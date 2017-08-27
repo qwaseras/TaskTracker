@@ -24,24 +24,29 @@ var FullTask = React.createClass({
          url: `/tasks/${this.state.task.id}}`,
          type: 'PUT',
          data: { task: task },
+         success:(response) => {this.editTask(response); console.log(response)}
          } );
      }
       this.setState({editable: !this.state.editable});
 
+   },
+   editTask(task){
+    this.setState({task: task});
+    console.log(this.state.task)
    },
 
   render() {
     var title = this.state.editable ?
                     <input type='text'
                            ref={(c) => this.ref_title = c}
-                           defaultValue={this.props.task.title} /> :
-                           <h2>{this.props.task.title}</h2> ;
+                           defaultValue={this.state.task.title} /> :
+                           <h2>{this.state.task.title}</h2> ;
    var description = this.state.editable ?
              <input type='text'
                     ref={(c) => this.ref_description = c}
-                    defaultValue={this.props.task.description}
+                    defaultValue={this.state.task.description}
              /> :
-                    <span>{this.props.task.description}</span>;
+                    <span>{this.state.task.description}</span>;
     return(
       <div className = "list-group">
         <div className = "box" style = {{minHeight: '200px'}}>

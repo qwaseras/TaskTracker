@@ -32,15 +32,16 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    @task.update(task_params)
-    respond_with @task
+    if @task.update(task_params)
+      respond_with @task, json: @task
+    end
   end
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
-    respond_with @task
+    redirect_to @task.project
   end
 
   def add_developer
