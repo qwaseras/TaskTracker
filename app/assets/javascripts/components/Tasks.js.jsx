@@ -3,7 +3,8 @@ var Tasks = React.createClass({
   getInitialState: function(){
     return{
       tasks: this.props.tasks,
-      project_id: this.props.project_id
+      project_id: this.props.project_id,
+      myTasks: false
     }
   },
 
@@ -41,8 +42,10 @@ var Tasks = React.createClass({
 
 
    addTask(task) {
-     var newState = this.state.tasks.concat(task);
-     this.setState({ tasks: newState })
+     if(this.state.myTasks == false){
+       var newState = this.state.tasks.concat(task);
+       this.setState({ tasks: newState })
+     }
     },
 
    updateTask(task) {
@@ -61,7 +64,7 @@ var Tasks = React.createClass({
      },
 
     myTasks(){
-       this.setState({ tasks: this.props.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}) });
+       this.setState({ tasks: this.props.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}), myTasks: true });
      },
 
   render() {
