@@ -25,35 +25,22 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task.project, notice: 'Task was successfully created.' }
-      else
-        format.html { redirect_to @task.project, alert: 'Task was not created.' }
-      end
-    end
+    @task.save
+    respond_with @task
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-      else
-        format.html { redirect_to @task, alert: 'Task was not updated.' }
-      end
-    end
+    @task.update(task_params)
+    respond_with @task
   end
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to @task.project, notice: 'Task was successfully destroyed.' }
-    end
+    respond_with @task
   end
 
   def add_developer
