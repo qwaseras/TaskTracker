@@ -3,7 +3,8 @@ var Tasks = React.createClass({
   getInitialState: function(){
     return{
       tasks: this.props.tasks,
-      project_id: this.props.project_id
+      project_id: this.props.project_id,
+      myTasks: false
     }
   },
 
@@ -41,8 +42,10 @@ var Tasks = React.createClass({
 
 
    addTask(task) {
-     var newState = this.state.tasks.concat(task);
-     this.setState({ tasks: newState })
+     if(this.state.myTasks == false){
+       var newState = this.state.tasks.concat(task);
+       this.setState({ tasks: newState })
+     }
     },
 
    updateTask(task) {
@@ -56,10 +59,27 @@ var Tasks = React.createClass({
       this.setState({ tasks: tasks });
     },
 
+    allTasks() {
+      this.setState({ tasks: this.props.tasks });
+     },
+
+    myTasks(){
+       this.setState({ tasks: this.props.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}), myTasks: true });
+     },
+
   render() {
     return(
       <div className ="list-group">
       <TaskForm onFormSubmit={this.handleSubmit}/>
+      <label>
+      <input type="radio" id="radioAll" name="site_name"
+                                   onChange={this.allTasks} defaultChecked />
+                                   All Tasks</label>
+      <label>
+      <input type="radio" id = "radioMy" name="site_name"
+                                  onChange={this.myTasks} />
+                                  My Tasks</label>
+
   			{this.state.tasks.map((task) => {
   					return(
                 <Task task = {task} key = {task.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
