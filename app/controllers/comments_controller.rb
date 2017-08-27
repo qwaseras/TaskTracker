@@ -27,19 +27,17 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
 
-    @comment.save
-    respond_with @comment, alert: "Comment created"
+    if @comment.save
+      respond_with @comment
+    end
+
   end
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    respond_to do |format|
-      if comment_params[:title] != @comment.title && @comment.update(comment_params)
-        format.html { redirect_to @comment.task, notice: 'Comment was successfully updated.' }
-      else
-        format.html { redirect_to @comment.task, alert: "Comment was not updated" }
-      end
+    if comment_params[:title] != @comment.title && @comment.update(comment_params)
+      respond_with  @comment
     end
   end
 
@@ -47,9 +45,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to @comment.task, alert: 'Comment was successfully destroyed.' }
-    end
+    respond_with  @comment
   end
 
   private

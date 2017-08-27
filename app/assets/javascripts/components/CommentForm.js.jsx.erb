@@ -7,8 +7,9 @@ var CommentForm = React.createClass({
   },
 
   handleSubmit: function(e){
-    var comment = {title: this.comment_title.value}
+    var comment = {title: this.comment_title.value} 
     this.props.onFormSubmit(comment);
+    this.comment_title.value = ""
   },
 
   render() {

@@ -28,20 +28,20 @@ var Comments = React.createClass({
        );
       },
 
-    handleUpdate(comment) {
+    handleUpdate(comment, id) {
         $.ajax({
-          url: `/comments/${comment.id}}`,
+          url: `/comments/${id}}`,
           type: 'PUT',
            data: { comment: comment },
-           success: () => {
-                            this.updateComment(comment);
+           success: (response) => {
+                            this.updateComment(response);
                            }
           } )
         },
 
     addComment(comment) {
-      var newState = this.state.comments.concat(comment);
-      this.setState({ comments: newState })
+      var comments = this.state.comments.concat(comment);
+      this.setState({ comments: comments })
      },
 
     updateComment(comment) {
@@ -68,7 +68,7 @@ var Comments = React.createClass({
             </div>
         </div>
 
-  			{this.state.comments.reverse().map((comment) =>{
+  			{this.state.comments.map((comment) =>{
   					return(
               <Comment comment = {comment} key = {comment.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
 					        )
