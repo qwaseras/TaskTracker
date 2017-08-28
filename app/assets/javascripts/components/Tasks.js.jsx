@@ -44,7 +44,12 @@ var Tasks = React.createClass({
    addTask(task) {
        var newState = this.state.tasks.concat(task);
        this.setState({ tasks: newState });
-       this.clickAll.click();
+       if (this.props.current_user.role == "developer") {
+        this.clickAll.click();
+        }
+        else{
+        this.setState({ taskFilter: this.state.tasks });
+        }
     },
 
    updateTask(task) {
