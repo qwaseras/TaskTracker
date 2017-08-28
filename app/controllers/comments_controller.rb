@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  include CommentsHelper
 
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments =  Comment.all
   end
 
   # GET /comments/1
@@ -26,24 +27,18 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment.task, notice: 'Comment was successfully created.' }
-      else
-        format.html { redirect_to @comment.task, alert: "Comment was not created" }
-      end
+
+    if @comment.save
+      render json: full_comment(@comment)
     end
+
   end
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    respond_to do |format|
-      if comment_params[:title] != @comment.title && @comment.update(comment_params)
-        format.html { redirect_to @comment.task, notice: 'Comment was successfully updated.' }
-      else
-        format.html { redirect_to @comment.task, alert: "Comment was not updated" }
-      end
+    if comment_params[:title] != @comment.title && @comment.update(comment_params)
+      render json: @comment
     end
   end
 
@@ -51,9 +46,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to @comment.task, alert: 'Comment was successfully destroyed.' }
-    end
+    respond_with  @comment
   end
 
   private

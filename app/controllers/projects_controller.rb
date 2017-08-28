@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_developer]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_developer, :remove_developer]
 
   # GET /projects
   # GET /projects.json
@@ -26,28 +26,16 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.users << current_user
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.html { render :new }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.save
+      render json: @project
     end
   end
 
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(title: project_params[:title])
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project }
-      else
-        format.html { render :edit }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.update(title: project_params[:title])
+      render json: @project
     end
   end
 
@@ -55,15 +43,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: @project
   end
 
   def add_developer
     @project.users <<  User.where(id: params[:user_ids])
     redirect_to @project,  notice: 'Developers was added.'
+  end
+
+  def remove_developer
+    @project.users.delete(User.where(id: params[:user_id]))
+    redirect_to @project,  notice: 'Developers was removed from project.'
   end
 
 

@@ -1,32 +1,33 @@
 <div class = "col-md-9 mx-auto">
-<small>project  <%= @task.project.title %></small><br/>
-
-<h2>Task <%= @task.title %></h2>
-<%= link_to 'Edit', edit_task_path(@task), class: "btn btn-primary" %>
-<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-
-  <p id="notice"><%= notice %></p>
   <div class="container">
     <div class="row">
       <div class="col-md-6 border">
-        <p>
-          <strong>Description:</strong>
-          <%= @task.description %>
+      <%= react_component "FullTask", task: @task, project_title: @task.project.title %>
       </div>
       <div class="col-6">
-        <%=form_for @task do |form|%>
+        <%=form_for @task, remote: true do |form|%>
           <%= form.label "Change status" %><br/>
           <%= form.select :status, options_for_select(Task::Status, @task.status), {},{class: 'select2'} %>
           <%= form.submit "Send"%>
         <%end%>
 
         <% if current_user.role == "manager"%>
-          <%=form_tag add_developer_task_path do  %>
+          <%=form_tag add_developer_task_path ,remote: true do  %>
             <%= hidden_field_tag :id, @task.id %>
             <%= label_tag :user_ids, "Chose developers to add"%><br/>
             <%= select_tag :user_ids, options_for_select(User.where.not(id: @task.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name, u.id]}),{ :multiple => true, size: 5, class: 'select2'} %>
             <%= submit_tag "Add dev to task"%>
           <%end%>
+        <%end%>
+        <%unless @task.users.empty? %>
+        <div class="">
+            <h5>Task developers</h5>
+            <ul class="list-group inline">
+              <% @task.users.where(role: 'developer').each do |user|%>
+                <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= link_to "Remove", remove_developer_task_path( id: @task.id, user_id: user.id), method: 'post' , remote:true, class: "float-right"  if current_user.role == 'manager'%></li>
+            </ul>
+            <%end%>
+          </div>
         <%end%>
       </div>
     </div>

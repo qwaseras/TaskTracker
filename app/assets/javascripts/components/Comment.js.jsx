@@ -1,20 +1,20 @@
 var Comment = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
 			comment: this.props.comment,
       editable: false
 		}
   },
 
-  handleDelete: function(id) {
+  handleDelete(id) {
       this.props.handleDelete(id);
   },
 
   handleEdit() {
     if(this.state.editable) {
-       var comment = {id: this.state.comment.id, title: this.ref_title.value};
-       this.props.handleUpdate(comment);
+       var comment = { title: this.ref_title.value};
+       this.props.handleUpdate(comment, this.state.comment.id);
      }
       this.setState({editable: !this.state.editable});
    },

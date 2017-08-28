@@ -1,5 +1,4 @@
 <div class = "col-md-9 mx-auto">
-  <p id="notice"><%= notice %></p>
     <h2>Project <%= @project.title %></h2>
     <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %><br/>
 
@@ -8,13 +7,11 @@
     <div class="row">
       <div class="col-md-6 border">
         <h4>Tasks</h4>
-        <%= react_component "Tasks", tasks: @project.tasks%>
-        <%= link_to 'New Task', new_task_path(project_id: @project.id), class: "btn btn-success"  %><br/>
-
+        <%= react_component "Tasks", tasks: tasks_react(@project), project_id: @project.id, current_user_id: current_user.id%>
       </div>
       <div class="col-6">
         <% if current_user.role == "manager"%>
-          <%=form_tag add_developer_project_path do  %>
+          <%=form_tag add_developer_project_path, remote: true do  %>
             <%= hidden_field_tag :id, @project.id %>
             <%= label_tag :user_ids, "Chose developers to add"%><br/>
             <%= select_tag :user_ids, options_for_select(User.where.not(id: @project.user_ids, role: "manager").collect{|u| [ u.first_name + " "+ u.second_name,u.id]}), { :multiple => true, size: 5, class: 'select2'} %>
@@ -22,6 +19,15 @@
 
           <%end%>
         <%end%>
+        <div class="">
+          <h5>Project developers</h5>
+          <ul class="list-group">
+            <% @project.users.where(role: 'developer').each do |user|%>
+              <li class="list-group-item"><%= user.first_name + " "+ user.second_name %><%= button_to "Remove", remove_developer_project_path( id: @project.id, user_id: user.id) , remote:true, class: "float-right"  if current_user.role == 'manager'%></li>
+            <%end%>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div><br/>

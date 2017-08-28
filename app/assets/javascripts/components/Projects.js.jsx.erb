@@ -1,10 +1,30 @@
 var Projects = React.createClass({
+  getInitialState(){
+    return{
+      projects: this.props.projects,
+    }
+  },
+  handleCreate(project){
+       $.ajax({
+            url: '/projects',
+             type: 'POST',
+             data: { project },
+             success: (response) => { console.log('project added', response); this.addProject(response) }
+            })
+        },
+
+   addProject(project) {
+       var newState = this.state.projects.concat(project);
+       this.setState({ projects: newState });
+    },
+
   render() {
     return(
     <div className="list-group">
-  			{this.props.projects.map(function(project, index){
+      <ProjectForm onFormSubmit = {this.handleCreate}/>
+  			{this.state.projects.map(function(project){
   					return(
-                      <a href = {"/projects/" + project.id}  className="list-group-item list-group-item-action">{project.title}</a>
+                      <a href = {"/projects/" + project.id}  className="list-group-item list-group-item-action" key = {project.id}>{project.title}</a>
   					 )
   					}
   				)}

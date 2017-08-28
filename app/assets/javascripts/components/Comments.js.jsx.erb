@@ -1,32 +1,24 @@
 var Comments = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
 			comments: this.props.comments,
-      title: ''
 		}
   },
 
-  handleUserInput: function(obj){
-  		this.setState(obj)
-  },
 
-
-  handleSubmit: function(){
-  		var comment = {
-  			title: this.state.title,
-        task_id: this.props.task_id
-  			};
+  handleSubmit(comment){
+    comment.task_id = this.props.task_id,
   		 $.ajax({
       		 	url: '/comments',
       		 	 type: 'POST',
       		 	 data: { comment },
-      		 	 success: () => { console.log('comment added', comment.title); this.addComment(comment) }
+      		 	 success: (response) => { console.log('comment added', comment.title, response.created_at); this.addComment(response) }
       		 	})
       	},
 
 
-    handleDelete: function(id) {
+    handleDelete(id) {
        $.ajax(
          {
            url: `/comments/${id}`,
@@ -36,29 +28,32 @@ var Comments = React.createClass({
        );
       },
 
-    handleUpdate(comment) {
+    handleUpdate(comment, id) {
         $.ajax({
-          url: `/comments/${comment.id}}`,
+          url: `/comments/${id}}`,
           type: 'PUT',
            data: { comment: comment },
-           success: () => {
-                            this.updateComment(comment);
+           success: (response) => {
+                            this.updateComment(response);
                            }
           } )
         },
 
     addComment(comment) {
-      var newState = this.state.comments.concat(comment);
-      this.setState({ comments: newState })
+      var comments = this.state.comments;
+      comments.unshift(comment);
+      this.setState({ comments: comments })
      },
 
     updateComment(comment) {
-      var comments = this.state.comments.filter((i) => { return i.id != comment.id });
-      comments.push(comment);
+      var comments = this.state.comments;
+      commentIndex = comments.findIndex((obj => obj.id == comment.id));
+      comments[commentIndex] = comment;
       this.setState({comments: comments });
+
     },
 
-    removeComment: function(id){
+    removeComment(id){
        var comments = this.state.comments.filter((comment) => { return comment.id != id; });
        this.setState({ comments: comments });
      },
@@ -72,7 +67,7 @@ var Comments = React.createClass({
               <h3>Comments</h3>
             </div>
             <div className="col">
-              <CommentForm onFormSubmit={this.handleSubmit} onInput = {this.handleUserInput}/>
+              <CommentForm onFormSubmit={this.handleSubmit}/>
             </div>
         </div>
 

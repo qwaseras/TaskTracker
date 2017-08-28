@@ -1,32 +1,24 @@
 var CommentForm = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
-			user: this.props.current_user,
       task: this.props.task
 		}
   },
 
-  handleChange: function(e){
-  		var name = e.target.name;
-  		obj={};
-  		obj[name] = e.target.value;
-  		this.props.onInput(obj)
-  },
-
-  handleSubmit: function(e){
-  		e.preventDefault();
-  		this.props.onFormSubmit();
+  handleSubmit(e){
+    var comment = {title: this.comment_title.value}
+    this.props.onFormSubmit(comment);
+    this.comment_title.value = ""
   },
 
   render() {
     return(
       <div >
-          <form className="form-inline" id="new_comment" onSubmit={this.handleSubmit}>
-            <input name="authenticity_token" value="x+FKyoLXBS9C3gC9e08ZYC9LFSK+ECkXkxITbX9E74EhoSDhbZsPFlsogKM6vkS3SfsBxAK/MN+2VdxFwhc2ag==" type="hidden" />
-            <input id="comment_description" name="title" type="text" onChange = {this.handleChange} placeholder="Type your comment" />
-            <input name="commit" value="Send" data-disable-with="Send" type="submit" />
-          </form>
+            <input ref={(c) => this.comment_title = c} id="comment_title" name="title" type="text" onChange = {this.handleChange} placeholder="Type your comment" />
+            <button name="commit" value="Send" data-disable-with="Send" type="submit" onClick={this.handleSubmit}>
+              Add
+            </button>
       </div>
     )
   }
