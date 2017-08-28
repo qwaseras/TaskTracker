@@ -19,9 +19,11 @@ var Projects = React.createClass({
     },
 
   render() {
+    var form = this.props.current_user_role == "manager" ?
+        <ProjectForm onFormSubmit = {this.handleCreate}/> : null;
     return(
     <div className="list-group">
-      <ProjectForm onFormSubmit = {this.handleCreate}/>
+      {form}
   			{this.state.projects.map(function(project){
   					return(
                       <a href = {"/projects/" + project.id}  className="list-group-item list-group-item-action" key = {project.id}>{project.title}</a>
