@@ -63,22 +63,28 @@ var Tasks = React.createClass({
      },
 
     myTasks(){
-       this.setState({ taskFilter: this.state.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}) });
+       this.setState({ taskFilter: this.state.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user.id)}) });
      },
 
   render() {
+  var radio = this.props.current_user.role == "developer" ?
+  <div>
+    <label>
+    <input type="radio" id="radioAll" name="site_name"
+                                 onChange={this.allTasks} defaultChecked
+                                 ref={input => this.clickAll = input}/>
+                                 All Tasks</label>
+    <label>
+    <input type="radio" id = "radioMy" name="site_name"
+                                onChange={this.myTasks} />
+                                My Tasks</label>
+                                </div>:
+                              null;
+
     return(
       <div className ="list-group">
       <TaskForm onFormSubmit={this.handleCreate}/>
-      <label>
-      <input type="radio" id="radioAll" name="site_name"
-                                   onChange={this.allTasks} defaultChecked
-                                   ref={input => this.clickAll = input}/>
-                                   All Tasks</label>
-      <label>
-      <input type="radio" id = "radioMy" name="site_name"
-                                  onChange={this.myTasks} />
-                                  My Tasks</label>
+      {radio}
 
   			{this.state.taskFilter.map((task) => {
   					return(

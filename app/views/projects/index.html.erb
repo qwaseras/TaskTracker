@@ -1,14 +1,12 @@
-<p id="notice"><%= notice %></p>
 <div class="container ">
 
   <div class="col-md-6">
 <h1>My Projects</h1>
 
-<%= react_component "Projects", projects: @projects%>
+<%= react_component "Projects", projects: @projects,  current_user_role: current_user.role%>
 
 <br>
 <% if current_user.role == "manager"%>
-  <%= link_to 'New Project', new_project_path %>
 <%end%>
 </div>
 </div>
