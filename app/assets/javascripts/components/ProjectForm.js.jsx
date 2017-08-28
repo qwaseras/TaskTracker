@@ -1,12 +1,12 @@
 var ProjectForm = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
     create: false
 		}
   },
 
-  handleSubmit: function(e){
+  handleSubmit(e){
       if(this.state.create) {
         var project = {title : this.project_title.value}
     		this.props.onFormSubmit(project);

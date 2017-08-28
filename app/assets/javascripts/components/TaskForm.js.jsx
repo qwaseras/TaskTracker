@@ -1,12 +1,12 @@
 var TaskForm = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
       create: false
 		}
   },
 
-  handleSubmit: function(e){
+  handleSubmit(e){
 
       if(this.state.create) {
         var task = {title : this.task_title.value, description: this.task_description.value}
@@ -21,8 +21,7 @@ var TaskForm = React.createClass({
                           <input ref={(c) => this.task_title = c} id="task_title" name="title" type="text" onChange = {this.handleChange} placeholder = "Type task title" /><br/>
                           <textarea ref={(c) => this.task_description = c} id="task_title" name="title" type="textarea" onChange = {this.handleChange} placeholder = "Type task description" /><br/>
                         </div>:
-                        null
-                         ;
+                        null ;
     return(
       <div>
         {task}

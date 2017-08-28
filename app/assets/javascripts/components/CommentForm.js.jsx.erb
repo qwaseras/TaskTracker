@@ -1,13 +1,13 @@
 var CommentForm = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
       task: this.props.task
 		}
   },
 
-  handleSubmit: function(e){
-    var comment = {title: this.comment_title.value} 
+  handleSubmit(e){
+    var comment = {title: this.comment_title.value}
     this.props.onFormSubmit(comment);
     this.comment_title.value = ""
   },

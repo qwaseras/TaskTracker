@@ -1,6 +1,6 @@
 var Tasks = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
     return{
       tasks: this.props.tasks,
       taskFilter: this.props.tasks,
@@ -9,7 +9,7 @@ var Tasks = React.createClass({
   },
 
 
-  handleCreate: function(task){
+  handleCreate(task){
     task.project_id = this.state.project_id
        $.ajax({
             url: '/tasks',
@@ -19,7 +19,7 @@ var Tasks = React.createClass({
             })
         },
 
-   handleDelete: function(id) {
+   handleDelete(id) {
       $.ajax(
         {
           url: `/tasks/${id}`,
@@ -53,7 +53,7 @@ var Tasks = React.createClass({
      this.setState({tasks: tasks });
    },
 
-   removeTask: function(id){
+   removeTask(id){
       var tasks = this.state.tasks.filter((task) => { return task.id != id; });
       this.setState({ tasks: tasks });
     },

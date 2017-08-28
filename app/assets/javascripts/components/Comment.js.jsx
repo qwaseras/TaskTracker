@@ -1,13 +1,13 @@
 var Comment = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
 			comment: this.props.comment,
       editable: false
 		}
   },
 
-  handleDelete: function(id) {
+  handleDelete(id) {
       this.props.handleDelete(id);
   },
 

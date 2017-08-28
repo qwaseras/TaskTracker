@@ -1,6 +1,6 @@
 var FullTask = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
     return{
       task: this.props.task,
       editable: false

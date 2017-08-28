@@ -1,13 +1,13 @@
 var Comments = React.createClass({
 
-  getInitialState: function(){
+  getInitialState(){
 		return{
 			comments: this.props.comments,
 		}
   },
 
 
-  handleSubmit: function(comment){
+  handleSubmit(comment){
     comment.task_id = this.props.task_id,
   		 $.ajax({
       		 	url: '/comments',
@@ -18,7 +18,7 @@ var Comments = React.createClass({
       	},
 
 
-    handleDelete: function(id) {
+    handleDelete(id) {
        $.ajax(
          {
            url: `/comments/${id}`,
@@ -53,7 +53,7 @@ var Comments = React.createClass({
 
     },
 
-    removeComment: function(id){
+    removeComment(id){
        var comments = this.state.comments.filter((comment) => { return comment.id != id; });
        this.setState({ comments: comments });
      },
