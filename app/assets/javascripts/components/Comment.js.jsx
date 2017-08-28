@@ -23,7 +23,8 @@ var Comment = React.createClass({
     var title = this.state.editable ?
               <input type='text'
                      ref={(c) => this.ref_title = c}
-                     defaultValue={this.props.comment.title} /> :
+                     defaultValue={this.props.comment.title}
+                      /> :
               <p  className="mb-1">{this.props.comment.title}</p>;
     return(
       <div className="list-group">
@@ -33,8 +34,8 @@ var Comment = React.createClass({
                 </div>
                 {title}
                 <small>{this.state.comment.created_at}</small><br/>
-                <button onClick={this.handleDelete.bind(this, this.state.comment.id)} >Delete</button>
-                <button onClick={this.handleEdit}> {this.state.editable ? 'Submit' : 'Edit' }  </button>
+                <button onClick={this.handleDelete.bind(this, this.state.comment.id)} className = "btn btn-danger">Delete</button>
+                <button onClick={this.handleEdit} className = "btn btn-success"> {this.state.editable ? 'Submit' : 'Edit' }  </button>
               </div>
 		</div>
     )

@@ -48,7 +48,7 @@ var Tasks = React.createClass({
         this.clickAll.click();
         }
         else{
-        this.setState({ taskFilter: this.state.tasks });
+          this.setState({ taskFilter: this.state.tasks });
         }
     },
 
