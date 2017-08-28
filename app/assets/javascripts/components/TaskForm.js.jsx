@@ -24,7 +24,7 @@ var TaskForm = React.createClass({
                         null
                          ;
     return(
-      <div className = "123">
+      <div>
         {task}
         <button onClick={this.handleSubmit}  className =  "float-right btn btn-success">{this.state.create ? 'Create task' : 'New task' }</button>
       </div>
