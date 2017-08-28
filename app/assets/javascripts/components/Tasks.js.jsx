@@ -3,19 +3,19 @@ var Tasks = React.createClass({
   getInitialState: function(){
     return{
       tasks: this.props.tasks,
+      taskFilter: this.props.tasks,
       project_id: this.props.project_id,
-      myTasks: false
     }
   },
 
 
-  handleSubmit: function(task){
+  handleCreate: function(task){
     task.project_id = this.state.project_id
        $.ajax({
             url: '/tasks',
              type: 'POST',
              data: { task },
-             success: () => { console.log('task added', task.title); this.addTask(task) }
+             success: (response) => { console.log('task added', task); this.addTask(response) }
             })
         },
 
@@ -42,10 +42,9 @@ var Tasks = React.createClass({
 
 
    addTask(task) {
-     if(this.state.myTasks == false){
        var newState = this.state.tasks.concat(task);
-       this.setState({ tasks: newState })
-     }
+       this.setState({ tasks: newState });
+       this.clickAll.click();
     },
 
    updateTask(task) {
@@ -60,27 +59,28 @@ var Tasks = React.createClass({
     },
 
     allTasks() {
-      this.setState({ tasks: this.props.tasks });
+      this.setState({ taskFilter: this.state.tasks });
      },
 
     myTasks(){
-       this.setState({ tasks: this.props.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}), myTasks: true });
+       this.setState({ taskFilter: this.state.tasks.filter((i) => {return i.user_ids.includes(this.props.current_user_id)}) });
      },
 
   render() {
     return(
       <div className ="list-group">
-      <TaskForm onFormSubmit={this.handleSubmit}/>
+      <TaskForm onFormSubmit={this.handleCreate}/>
       <label>
       <input type="radio" id="radioAll" name="site_name"
-                                   onChange={this.allTasks} defaultChecked />
+                                   onChange={this.allTasks} defaultChecked
+                                   ref={input => this.clickAll = input}/>
                                    All Tasks</label>
       <label>
       <input type="radio" id = "radioMy" name="site_name"
                                   onChange={this.myTasks} />
                                   My Tasks</label>
 
-  			{this.state.tasks.map((task) => {
+  			{this.state.taskFilter.map((task) => {
   					return(
                 <Task task = {task} key = {task.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
   					)

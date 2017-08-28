@@ -40,14 +40,17 @@ var Comments = React.createClass({
         },
 
     addComment(comment) {
-      var comments = this.state.comments.concat(comment);
+      var comments = this.state.comments;
+      comments.unshift(comment);
       this.setState({ comments: comments })
      },
 
     updateComment(comment) {
-      var comments = this.state.comments.filter((i) => { return i.id != comment.id });
-      comments.push(comment);
+      var comments = this.state.comments;
+      commentIndex = comments.findIndex((obj => obj.id == comment.id));
+      comments[commentIndex] = comment;
       this.setState({comments: comments });
+
     },
 
     removeComment: function(id){

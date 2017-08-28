@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include TasksHelper
   before_action :set_task, only: [:show, :edit, :update, :destroy, :add_developer, :remove_developer]
 
   # GET /tasks
@@ -26,14 +27,15 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.save
-    respond_with @task
+    render json: full_task(@task)
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
     if @task.update(task_params)
-      respond_with @task, json: @task
+      flash.now.alert = "Task was updated"
+      render json: full_task(@task)
     end
   end
 
