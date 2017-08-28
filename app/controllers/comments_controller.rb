@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  include CommentsHelper
 
   # GET /comments
   # GET /comments.json
@@ -28,7 +29,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      respond_with @comment
+      render json: full_comment(@comment)
     end
 
   end
@@ -37,7 +38,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     if comment_params[:title] != @comment.title && @comment.update(comment_params)
-      respond_with  @comment
+      respond_with  @comment, json: @comment
     end
   end
 

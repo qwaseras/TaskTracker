@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash.now.alert = "Task was updated"
-      respond_with full_task(@task), json: @task
+      render json: full_task(@task)
     end
   end
 
