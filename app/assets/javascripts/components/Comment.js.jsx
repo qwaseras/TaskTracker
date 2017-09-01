@@ -7,8 +7,8 @@ var Comment = React.createClass({
 		}
   },
 
-  handleDelete(id) {
-      this.props.handleDelete(id);
+  handleDelete() {
+      this.props.handleDelete(this.state.comment.id);
   },
 
   handleEdit() {
@@ -34,7 +34,7 @@ var Comment = React.createClass({
                 </div>
                 {title}
                 <small>{this.state.comment.created_at}</small><br/>
-                <button onClick={this.handleDelete.bind(this, this.state.comment.id)} className = "btn btn-danger">Delete</button>
+                <button onClick={this.handleDelete} className = "btn btn-danger">Delete</button>
                 <button onClick={this.handleEdit} className = "btn btn-success"> {this.state.editable ? 'Submit' : 'Edit' }  </button>
               </div>
 		</div>

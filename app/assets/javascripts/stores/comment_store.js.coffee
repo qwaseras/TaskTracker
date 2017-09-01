@@ -21,7 +21,8 @@ class CommentStore
       data:
         comment: comment
       success: (response)=>
-        @comments.unshift(response)
+        @comments.push(response)
+        console.log(@comments)
         @emitChange()
 
   onUpdateComment: (comment)->
@@ -36,6 +37,17 @@ class CommentStore
           return obj.id == response.id
         )
         @comments[commentIndex] = response
+        @emitChange()
+
+  onDeleteComment: (id)->
+    $.ajax
+      type: 'DELETE'
+      url: "/comments/#{id}"
+      success: () =>
+        commentIndex = @comments.findIndex((obj) ->
+          return obj.id == id
+        )
+        @comments.splice(commentIndex, 1)
         @emitChange()
 
 

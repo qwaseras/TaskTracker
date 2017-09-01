@@ -4,6 +4,7 @@ class CommentActions
       'initData',
       'submitComment'
       'updateComment'
+      'deleteComment'
     )
 
 window.CommentActions = alt.createActions(CommentActions)

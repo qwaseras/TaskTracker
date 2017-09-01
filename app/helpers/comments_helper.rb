@@ -2,7 +2,7 @@ module CommentsHelper
 
   def comments_react(task)
     react_comments = []
-    task.comments.reverse_each do |comment|
+    task.comments.each do |comment|
       react_comments << full_comment(comment)
     end
     react_comments
