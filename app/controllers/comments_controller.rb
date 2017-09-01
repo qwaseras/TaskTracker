@@ -46,7 +46,6 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    respond_with  @comment
   end
 
   private
