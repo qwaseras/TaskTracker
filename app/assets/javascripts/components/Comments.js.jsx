@@ -8,7 +8,6 @@ var Comments = React.createClass({
 
   componentWillMount() {
     CommentStore.listen(this.onChange)
-    console.log(this.props)
     CommentActions.initData(this.props)
   },
 
@@ -49,9 +48,9 @@ var Comments = React.createClass({
             </div>
         </div>
 
-  			{this.state.comments.map((comment) =>{
+  			{this.state.comments.map((comment, index) =>{
   					return(
-              <Comment comment = {comment} key = {comment.id} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
+              <Comment comment = {comment} key = {index} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
 					        )
   					}
   				)}

@@ -25,16 +25,17 @@ class CommentStore
         @emitChange()
 
   onUpdateComment: (comment)->
-    console.log(comment.id)
-
     $.ajax
       type: 'PATCH'
       url: "/comments/#{comment.id}"
       data:
         comment:
           title: comment.title
-      success: (response)=>
-          console.log(response)
+      success: (response) =>
+        commentIndex = @comments.findIndex((obj) ->
+          return obj.id == response.id
+        )
+        @comments[commentIndex] = response
         @emitChange()
 
 

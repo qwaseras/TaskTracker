@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    if comment_params[:title] != @comment.title && @comment.update(comment_params)
+    if  @comment.update(comment_params)
       render json: @comment
     end
   end
