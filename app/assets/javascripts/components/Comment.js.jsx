@@ -7,14 +7,14 @@ var Comment = React.createClass({
 		}
   },
 
-  handleDelete(id) {
-      this.props.handleDelete(id);
+  handleDelete() {
+      this.props.handleDelete(this.state.comment.id);
   },
 
   handleEdit() {
     if(this.state.editable) {
-       var comment = { title: this.ref_title.value};
-       this.props.handleUpdate(comment, this.state.comment.id);
+       var comment = { title: this.ref_title.value, id:  this.state.comment.id};
+       this.props.handleUpdate(comment);
      }
       this.setState({editable: !this.state.editable});
    },
@@ -34,7 +34,7 @@ var Comment = React.createClass({
                 </div>
                 {title}
                 <small>{this.state.comment.created_at}</small><br/>
-                <button onClick={this.handleDelete.bind(this, this.state.comment.id)} className = "btn btn-danger">Delete</button>
+                <button onClick={this.handleDelete} className = "btn btn-danger">Delete</button>
                 <button onClick={this.handleEdit} className = "btn btn-success"> {this.state.editable ? 'Submit' : 'Edit' }  </button>
               </div>
 		</div>
