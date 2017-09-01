@@ -31,9 +31,8 @@ var Comments = React.createClass({
 
     },
 
-  handleUpdate(comment, id) {
-    console.log(comment, id)
-   CommentActions.updateComment(comment, id)
+  handleUpdate(comment) {
+    CommentActions.updateComment(comment)
       },
 
 

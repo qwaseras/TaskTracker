@@ -24,14 +24,17 @@ class CommentStore
         @comments.unshift(response)
         @emitChange()
 
-  onUpdateComment: (comment, comment_id)->
+  onUpdateComment: (comment)->
+    console.log(comment.id)
+
     $.ajax
       type: 'PATCH'
-      url: "/comments/1"
+      url: "/comments/#{comment.id}"
       data:
-        comment: comment
+        comment:
+          title: comment.title
       success: (response)=>
-        _.find(@comments, { id: response.id} ).title = comment.title
+          console.log(response)
         @emitChange()
 
 

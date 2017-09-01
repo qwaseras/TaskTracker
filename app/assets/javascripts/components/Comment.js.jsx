@@ -13,8 +13,8 @@ var Comment = React.createClass({
 
   handleEdit() {
     if(this.state.editable) {
-       var comment = { title: this.ref_title.value};
-       this.props.handleUpdate(comment, this.state.comment.id);
+       var comment = { title: this.ref_title.value, id:  this.state.comment.id};
+       this.props.handleUpdate(comment);
      }
       this.setState({editable: !this.state.editable});
    },
